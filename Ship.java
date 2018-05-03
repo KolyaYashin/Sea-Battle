@@ -5,6 +5,7 @@ public class Ship {
     public boolean isGorizontal;
     public int[] x;
     public int[] y;
+
     public Ship(int _palubs, boolean _isGorizontal, int _x, int _y){
         palubs=_palubs;
         isGorizontal=_isGorizontal;
@@ -24,15 +25,88 @@ public class Ship {
         }
 
     }
+    public void deleteInMap(Map map){
+        try {
+            for (int i = 0; i < this.palubs; i++) {
+
+                map.map[y[i]][x[i]] = 0;
+
+            }
+        }catch(Exception e){
+
+        }
+    }
     public void toMap(Map map){
         try {
             for (int i = 0; i < this.palubs; i++) {
 
-                map.map[y[i]][x[i]] = 1;
-
+                map.map[y[i]][x[i]] = 2;
             }
         }catch (Exception e){
+            this.deleteInMap(map);
             System.out.println("You can't set ship here!");
         }
+
+         for (int i = 0; i < this.palubs; i++) {
+            try {
+                if (map.map[y[i] - 1][x[i]] == 0) {
+                    map.map[y[i] - 1][x[i]] = 1;
+                }
+            }catch (Exception e){
+                System.out.println("You can't set ship here!");
+            }try{
+               if (map.map[y[i] - 1][x[i] - 1] == 0) {
+                   map.map[y[i] - 1][x[i] - 1] = 1;
+               }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }try{
+               if (map.map[y[i] - 1][x[i] + 1] == 0) {
+                  map.map[y[i] - 1][x[i] + 1] = 1;
+             }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }try{
+              if (map.map[y[i] + 1][x[i]] == 0) {
+                  map.map[y[i] + 1][x[i]] = 1;
+              }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }try{
+              if (map.map[y[i] + 1][x[i] + 1] == 0) {
+                  map.map[y[i] + 1][x[i] + 1] = 1;
+              }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }try{
+               if (map.map[y[i] + 1][x[i] - 1] == 0) {
+                   map.map[y[i] + 1][x[i] - 1] = 1;
+               }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }try{
+               if (map.map[y[i]][x[i] + 1] == 0) {
+                   map.map[y[i]][x[i] + 1] = 1;
+                }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }try{
+               if (map.map[y[i]][x[i] - 1] == 0) {
+                   map.map[y[i]][x[i] - 1] = 1;
+              }
+             }catch (Exception e){
+                 System.out.println("You can't set ship here!");
+             }
+            }
+
+    }
+    public boolean isClear(Map map){
+        for (int i = 0; i < this.palubs; i++) {
+            if(map.map[y[i]][x[i]]==2||map.map[y[i]][x[i]]==1){
+                return false;
+            }
+
+        }
+        return true;
     }
 }

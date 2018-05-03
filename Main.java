@@ -9,6 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 
 public class Main extends Application {
     private void drawMap(Map map, Pane pane,int startX,int startY,ImageView[][] images){
@@ -20,12 +22,18 @@ public class Main extends Application {
                     images[i][j].setLayoutY(startY + i * 50 + 25);
                     pane.getChildren().add(images[i][j]);
                 }
-                if(map.map[i][j]==1) {
-                    images[i][j] = new ImageView("/sample/cellShip.jpg");
+                if(map.map[i][j]==2) {
+                    images[i][j] = new ImageView("/sample/1_palubsShip.jpg");
                     images[i][j].setLayoutX(startX + j * 50 + 25);
                     images[i][j].setLayoutY(startY + i * 50 + 25);
                     pane.getChildren().add(images[i][j]);
 
+                }
+                if(map.map[i][j]==1){
+                    images[i][j] = new ImageView("/sample/krestik.jpg");
+                    images[i][j].setLayoutX(startX + j * 50 + 25);
+                    images[i][j].setLayoutY(startY + i * 50 + 25);
+                    pane.getChildren().add(images[i][j]);
                 }
             }
         }
@@ -38,8 +46,12 @@ public class Main extends Application {
                     Image im=new Image("/sample/cell.jpg");
                     images[i][j].setImage(im);
                 }
+                if(map.map[i][j]==2){
+                    Image im=new Image("/sample/1_palubsShip.jpg");
+                    images[i][j].setImage(im);
+                }
                 if(map.map[i][j]==1){
-                    Image im=new Image("/sample/cellShip.jpg");
+                    Image im=new Image("/sample/krestik.jpg");
                     images[i][j].setImage(im);
                 }
             }
@@ -47,7 +59,6 @@ public class Main extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception{
-
         Map map1=new Map();
         Map map2=new Map();
         ImageView[][] images=new ImageView[10][10];
@@ -59,7 +70,7 @@ public class Main extends Application {
         btn.setPrefHeight(60);
         btn.setLayoutX(250-btn.getPrefWidth()/2);
         btn.setLayoutY(250-btn.getPrefHeight()/2);
-        pane.setStyle("-fx-background-color: BEIGE;");
+        pane.setStyle("-fx-background-color: blue;");
         btn.setStyle("-fx-font-size: 2.5em; -fx-border-color: red; -fx-border-width: 4px; -fx-text-fill:#DC143C; -fx-background-color: #66CDAA");
         btn.setOnMouseClicked(event -> {
             Pane pane1=new Pane();
@@ -76,9 +87,11 @@ public class Main extends Application {
             pane1.getChildren().add(exitBtn);
             pane1.getChildren().add(nextBtn);
             pane1.getChildren().add(text);
-            Scene scene1=new Scene(pane1,1000,700);
+            Scene scene1=new Scene(pane1,screenSize.getWidth(),screenSize.getHeight());
             stage.setScene(scene1);
             stage.setTitle("Player 1");
+            stage.setX(0);
+            stage.setY(0);
             for(int i=0;i<10;i++){
                 for(int j=0;j<10;j++){
                     map1.map[i][j]=0;
@@ -240,8 +253,10 @@ public class Main extends Application {
                     pane2.getChildren().add(exitBtn2);
                     pane2.getChildren().add(nextBtn2);
                     pane2.getChildren().add(text1);
-                    Scene scene2 = new Scene(pane2, 1000, 700);
+                    Scene scene2 = new Scene(pane2, screenSize.getWidth(), screenSize.getHeight());
                     stage.setScene(scene2);
+                    stage.setX(0);
+                    stage.setY(0);
                     stage.setTitle("Player 2");
                     for (int i = 0; i < 10; i++) {
                         for (int j = 0; j < 10; j++) {
@@ -389,6 +404,16 @@ public class Main extends Application {
                         stage.setScene(scene1);
                         stage.setTitle("Player 1");
                     });
+                    nextBtn2.setOnMouseClicked(event2 -> {
+                        Pane pane3=new Pane();
+                        stage.setX(0);
+                        stage.setY(0);
+                        drawMap(map1,pane3,50,50,images);
+                        Scene scene3=new Scene(pane3, screenSize.getWidth(),screenSize.getHeight());
+                        stage.setScene(scene3);
+                        stage.setTitle("Battle");
+
+                    });
                 });
 
         });
@@ -397,5 +422,6 @@ public class Main extends Application {
         stage.setTitle("Sea Battle");
         stage.show();
     }
+    public Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public static void main(String[] args) {launch(args); }
 }

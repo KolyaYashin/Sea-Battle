@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -30,7 +31,7 @@ public class Main extends Application {
 
                 }
                 if(map.map[i][j]==1){
-                    images[i][j] = new ImageView("/sample/krestik.jpg");
+                    images[i][j] = new ImageView("/sample/cell.jpg");
                     images[i][j].setLayoutX(startX + j * 50 + 25);
                     images[i][j].setLayoutY(startY + i * 50 + 25);
                     pane.getChildren().add(images[i][j]);
@@ -51,7 +52,7 @@ public class Main extends Application {
                     images[i][j].setImage(im);
                 }
                 if(map.map[i][j]==1){
-                    Image im=new Image("/sample/krestik.jpg");
+                    Image im=new Image("/sample/cell.jpg");
                     images[i][j].setImage(im);
                 }
             }
@@ -114,12 +115,16 @@ public class Main extends Application {
                 palub_1[ii].setOnMouseReleased(event1 -> {
                     double x=event1.getSceneX();
                     double y=event1.getSceneY();
+
                     if(x>425&&x<925&&y>50&&y<550){
                         System.out.println((x-425)+" "+((x-425)/50)+" "+((y-50)/50)+" "+(y-50));
                         Ship ship4=new Ship(1,palub_1[ii].getRotate()==0,(int)Math.round(((x-425)/50))-1,(int)Math.round(((y-50)/50))-1);
-                        ship4.toMap(map1);
-                        redrawMap(map1,images);
-                        pane1.getChildren().remove(palub_1[ii]);
+                        if(ship4.isClear(map1)) {
+                            ship4.toMap(map1);
+                            redrawMap(map1, images);
+                            pane1.getChildren().remove(palub_1[ii]);
+                        }
+
                     }
                 });
             }
@@ -155,9 +160,10 @@ public class Main extends Application {
                     if(x>425&&x<925&&y>50&&y<550){
                         System.out.println((x-425)+" "+((x-425)/50)+" "+((y-50)/50)+" "+(y-50));
                         Ship ship4=new Ship(2,palub_2[ii].getRotate()==0,(int)Math.round(((x-425)/50))-1,(int)Math.round(((y-50)/50))-1);
+                        if(ship4.isClear(map1)) {
                         ship4.toMap(map1);
                         redrawMap(map1,images);
-                        pane1.getChildren().remove(palub_2[ii]);
+                        pane1.getChildren().remove(palub_2[ii]);}
                     }
                 });
             }
@@ -193,9 +199,10 @@ public class Main extends Application {
                     if(x>425&&x<925&&y>50&&y<550){
                         System.out.println((x-425)+" "+((x-425)/50)+" "+((y-50)/50)+" "+(y-50));
                         Ship ship4=new Ship(3,palub_3[ii].getRotate()==0,(int)Math.round(((x-425)/50))-1,(int)Math.round(((y-50)/50))-1);
+                        if(ship4.isClear(map1)) {
                         ship4.toMap(map1);
                         redrawMap(map1,images);
-                        pane1.getChildren().remove(palub_3[ii]);
+                        pane1.getChildren().remove(palub_3[ii]);}
                     }
                 });
 
@@ -229,9 +236,10 @@ public class Main extends Application {
                 if(x>425&&x<925&&y>50&&y<550){
                     System.out.println((x-425)+" "+((x-425)/50)+" "+((y-50)/50)+" "+(y-50));
                     Ship ship4=new Ship(4,palub_4.getRotate()==0,(int)Math.round(((x-425)/50))-1,(int)Math.round(((y-50)/50))-1);
+                    if(ship4.isClear(map1)) {
                     ship4.toMap(map1);
                     redrawMap(map1,images);
-                    pane1.getChildren().remove(palub_4);
+                    pane1.getChildren().remove(palub_4);}
                 }
             });
             exitBtn.setOnMouseClicked(event1 -> {
@@ -283,9 +291,10 @@ public class Main extends Application {
                             if (x > 425 && x < 925 && y > 50 && y < 550) {
                                 System.out.println((x - 425) + " " + ((x - 425) / 50) + " " + ((y - 50) / 50) + " " + (y - 50));
                                 Ship ship4 = new Ship(1, palub2_1[ii].getRotate() == 0, (int) Math.round(((x - 425) / 50)) - 1, (int) Math.round(((y - 50) / 50)) - 1);
+                                if(ship4.isClear(map2)) {
                                 ship4.toMap(map2);
                                 redrawMap(map2, images2);
-                                pane2.getChildren().remove(palub2_1[ii]);
+                                pane2.getChildren().remove(palub2_1[ii]);}
                             }
                         });
                     }
@@ -321,9 +330,10 @@ public class Main extends Application {
                             if (x > 425 && x < 925 && y > 50 && y < 550) {
                                 System.out.println((x - 425) + " " + ((x - 425) / 50) + " " + ((y - 50) / 50) + " " + (y - 50));
                                 Ship ship4 = new Ship(2, palub2_2[ii].getRotate() == 0, (int) Math.round(((x - 425) / 50)) - 1, (int) Math.round(((y - 50) / 50)) - 1);
+                                if(ship4.isClear(map2)) {
                                 ship4.toMap(map2);
                                 redrawMap(map2, images2);
-                                pane2.getChildren().remove(palub2_2[ii]);
+                                pane2.getChildren().remove(palub2_2[ii]);}
                             }
                         });
                     }
@@ -359,9 +369,10 @@ public class Main extends Application {
                             if (x > 425 && x < 925 && y > 50 && y < 550) {
                                 System.out.println((x - 425) + " " + ((x - 425) / 50) + " " + ((y - 50) / 50) + " " + (y - 50));
                                 Ship ship4 = new Ship(3, palub2_3[ii].getRotate() == 0, (int) Math.round(((x - 425) / 50)) - 1, (int) Math.round(((y - 50) / 50)) - 1);
+                                if(ship4.isClear(map2)) {
                                 ship4.toMap(map2);
                                 redrawMap(map2, images2);
-                                pane2.getChildren().remove(palub2_3[ii]);
+                                pane2.getChildren().remove(palub2_3[ii]);}
                             }
                         });
 
@@ -395,9 +406,10 @@ public class Main extends Application {
                         if (x > 425 && x < 925 && y > 50 && y < 550) {
                             System.out.println((x - 425) + " " + ((x - 425) / 50) + " " + ((y - 50) / 50) + " " + (y - 50));
                             Ship ship4 = new Ship(4, palub2_4.getRotate() == 0, (int) Math.round(((x - 425) / 50)) - 1, (int) Math.round(((y - 50) / 50)) - 1);
+                            if(ship4.isClear(map2)) {
                             ship4.toMap(map2);
                             redrawMap(map2, images2);
-                            pane2.getChildren().remove(palub2_4);
+                            pane2.getChildren().remove(palub2_4);}
                         }
                     });
                     exitBtn2.setOnMouseClicked(event3 -> {
@@ -409,6 +421,77 @@ public class Main extends Application {
                         stage.setX(0);
                         stage.setY(0);
                         drawMap(map1,pane3,50,50,images);
+                        drawMap(map2,pane3,650,50,images2);
+                        TextArea direction=new TextArea("right");
+                        ImageView arrow=new ImageView("/sample/right.jpg");
+                        arrow.setLayoutX(595);
+                        Image left=new Image("/sample/left.jpg");
+                        Image right=new Image("/sample/right.jpg");
+                        arrow.setLayoutY(300);
+                        pane3.getChildren().add(arrow);
+                        for(int i=0;i<10;i++){
+                            for(int j=0;j<10;j++){
+                                Image im=new Image("/sample/cell.jpg");
+                                images[i][j].setImage(im);
+                                images2[i][j].setImage(im);
+                                final int x=i;
+                                final int y=j;
+
+                                images[i][j].setOnMouseClicked(event3 -> {
+                                    if(direction.getText().compareTo("left")==0) {
+                                        if (map1.map[x][y] == 0 && map1.tochki[x][y].getText().compareTo("ne tochka")==0) {
+                                            Image im2 = new Image("/sample/tochka.jpg");
+                                            images[x][y].setImage(im2);
+                                            arrow.setImage(right);
+                                            direction.setText("right");
+                                            map1.tochki[x][y].setText("tochka");
+                                        }
+
+                                        if (map1.map[x][y] == 2) {
+                                            map1.map[x][y]=3;
+                                            Image im2 = new Image("/sample/krestik.jpg");
+                                            images[x][y].setImage(im2);
+                                            boolean isAlive=false;
+                                            if(map1.map[x- 1][y] == 0){
+
+                                            }
+                                        }
+                                        if (map1.map[x][y] == 1&& map1.tochki[x][y].getText().compareTo("ne tochka")==0) {
+                                            Image im2 = new Image("/sample/tochka.jpg");
+                                            images[x][y].setImage(im2);
+                                            arrow.setImage(right);
+                                            direction.setText("right");
+                                            map1.tochki[x][y].setText("tochka");
+
+                                        }
+                                    }
+                                });
+
+                                images2[i][j].setOnMouseClicked(event3 -> {
+                                    if(direction.getText().compareTo("right")==0) {
+                                        if (map2.map[ii][jj] == 0&& map2.tochki[ii][jj].getText().compareTo("ne tochka")==0) {
+                                            Image im2 = new Image("/sample/tochka.jpg");
+                                            images2[ii][jj].setImage(im2);
+                                            arrow.setImage(left);
+                                            direction.setText("left");
+                                            map2.tochki[ii][jj].setText("tochka");
+                                        }
+                                        if (map2.map[ii][jj] == 2) {
+                                            map2.map[ii][jj]=3;
+                                            Image im2 = new Image("/sample/krestik.jpg");
+                                            images2[ii][jj].setImage(im2);
+                                        }
+                                        if (map2.map[ii][jj] == 1&& map2.tochki[ii][jj].getText().compareTo("ne tochka")==0) {
+                                            Image im2 = new Image("/sample/tochka.jpg");
+                                            images2[ii][jj].setImage(im2);
+                                            arrow.setImage(left);
+                                            direction.setText("left");
+                                            map2.tochki[ii][jj].setText("tochka");
+                                        }
+                                    }
+                                });
+                            }
+                        }
                         Scene scene3=new Scene(pane3, screenSize.getWidth(),screenSize.getHeight());
                         stage.setScene(scene3);
                         stage.setTitle("Battle");

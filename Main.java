@@ -1,5 +1,4 @@
-package sample;
-
+package  sample;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,6 +35,7 @@ public class Main extends Application {
                     images[i][j].setLayoutY(startY + i * 50 + 25);
                     pane.getChildren().add(images[i][j]);
                 }
+
             }
         }
 
@@ -53,6 +53,22 @@ public class Main extends Application {
                 }
                 if(map.map[i][j]==1){
                     Image im=new Image("/sample/cell.jpg");
+                    images[i][j].setImage(im);
+                }
+
+            }
+
+        }
+    }
+    private void drawFire(Map map, ImageView[][] images){
+        for(int i=0;i<10;i++) {
+            for (int j = 0; j < 10; j++) {
+                if (map.map[i][j] == 3) {
+                    Image im = new Image("/sample/fireShip.jpg.jpg");
+                    images[i][j].setImage(im);
+                }
+                if(map.map[i][j]==5){
+                    Image im=new Image("/sample/tochka.jpg");
                     images[i][j].setImage(im);
                 }
             }
@@ -451,10 +467,91 @@ public class Main extends Application {
                                             map1.map[x][y]=3;
                                             Image im2 = new Image("/sample/krestik.jpg");
                                             images[x][y].setImage(im2);
+                                            try {
+                                                if (map1.map[x - 1][y] == 1) {
+                                                    map1.map[x - 1][y]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x][y - 1] == 1) {
+                                                    map1.map[x][y - 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x - 1][y - 1] == 1) {
+                                                    map1.map[x - 1][y - 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x + 1][y] == 1) {
+                                                    map1.map[x + 1][y]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x][y + 1] == 1) {
+                                                    map1.map[x][y + 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x + 1][y + 1] == 1) {
+                                                    map1.map[x + 1][y + 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x - 1][y + 1] == 1) {
+                                                    map1.map[x - 1][y + 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x + 1][y - 1] == 1) {
+                                                    map1.map[x + 1][y - 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
                                             boolean isAlive=false;
-                                            if(map1.map[x- 1][y] == 0){
-
+                                            try {
+                                                if (map1.map[x - 1][y] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x][y - 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x - 1][y - 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x + 1][y] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x][y + 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x + 1][y + 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x - 1][y + 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map1.map[x + 1][y - 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            if(!isAlive) {
+                                                drawFire(map1, images);
                                             }
+
                                         }
                                         if (map1.map[x][y] == 1&& map1.tochki[x][y].getText().compareTo("ne tochka")==0) {
                                             Image im2 = new Image("/sample/tochka.jpg");
@@ -469,24 +566,108 @@ public class Main extends Application {
 
                                 images2[i][j].setOnMouseClicked(event3 -> {
                                     if(direction.getText().compareTo("right")==0) {
-                                        if (map2.map[ii][jj] == 0&& map2.tochki[ii][jj].getText().compareTo("ne tochka")==0) {
+                                        if (map2.map[x][y] == 0&& map2.tochki[x][y].getText().compareTo("ne tochka")==0) {
                                             Image im2 = new Image("/sample/tochka.jpg");
-                                            images2[ii][jj].setImage(im2);
+                                            images2[x][y].setImage(im2);
                                             arrow.setImage(left);
                                             direction.setText("left");
-                                            map2.tochki[ii][jj].setText("tochka");
+                                            map2.tochki[x][y].setText("tochka");
                                         }
-                                        if (map2.map[ii][jj] == 2) {
-                                            map2.map[ii][jj]=3;
+                                        if (map2.map[x][y] == 2) {
+                                            map2.map[x][y]=3;
                                             Image im2 = new Image("/sample/krestik.jpg");
-                                            images2[ii][jj].setImage(im2);
+                                            images2[x][y].setImage(im2);
+                                            try {
+                                                if (map2.map[x - 1][y] == 1) {
+                                                    map2.map[x - 1][y]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x][y - 1] == 1) {
+                                                    map2.map[x][y - 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x - 1][y - 1] == 1) {
+                                                    map2.map[x - 1][y - 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x + 1][y] == 1) {
+                                                    map2.map[x + 1][y]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x][y + 1] == 1) {
+                                                    map2.map[x][y + 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x + 1][y + 1] == 1) {
+                                                    map2.map[x + 1][y + 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x - 1][y + 1] == 1) {
+                                                    map2.map[x - 1][y + 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            try {
+                                                if (map2.map[x + 1][y - 1] == 1) {
+                                                    map2.map[x + 1][y - 1]=5;
+                                                }
+                                            }catch (Exception e){System.out.println(e);}
+                                            boolean isAlive=false;
+                                            try {
+                                                if (map2.map[x - 1][y] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x][y - 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x - 1][y - 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x + 1][y] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x][y + 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x + 1][y + 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x - 1][y + 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            try {
+                                                if (map2.map[x + 1][y - 1] == 2) {
+                                                    isAlive = true;
+                                                }
+                                            }catch (Exception e){}
+                                            if(!isAlive) {
+                                                drawFire(map2, images2);
+                                            }
                                         }
-                                        if (map2.map[ii][jj] == 1&& map2.tochki[ii][jj].getText().compareTo("ne tochka")==0) {
+                                        if (map2.map[x][y] == 1&& map2.tochki[x][y].getText().compareTo("ne tochka")==0) {
                                             Image im2 = new Image("/sample/tochka.jpg");
-                                            images2[ii][jj].setImage(im2);
+                                            images2[x][y].setImage(im2);
                                             arrow.setImage(left);
                                             direction.setText("left");
-                                            map2.tochki[ii][jj].setText("tochka");
+                                            map2.tochki[x][y].setText("tochka");
                                         }
                                     }
                                 });
